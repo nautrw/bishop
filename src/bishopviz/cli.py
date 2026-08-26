@@ -1,6 +1,5 @@
-from ctypes.wintypes import CHAR
-from drawing import print_graph
-from hash import bytes_to_pairs, encode_text
+from bishopviz.drawing import print_graph
+from bishopviz.hash import bytes_to_pairs, encode_text
 
 GRAPH_WIDTH = 17
 GRAPH_HEIGHT = 9

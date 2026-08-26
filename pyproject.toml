@@ -1,0 +1,30 @@
+[project]
+name = "bishopviz_nautrw"
+version = "0.0.1"
+authors = [
+    { name = "nautrw", email="nautrw@proton.me" }
+]
+description = "Generate random ASCII art from plain text and media using the drunken bishop algorithm"
+dependencies = [
+    "click==8.3.3",
+]
+requires-python = ">= 3.6"
+license = "MIT"
+readme = { file = "README.md", content-type = "text/markdown" }
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent"
+]
+
+[project.scripts]
+bishopviz = "bishopviz.cli:cli"
+
+[project.urls]
+Homepage = "https://github.com/nautrw/bishopviz"
+Repository = "https://github.com/nautrw/bishopviz.git"
+Issues = "https://github.com/nautrw/bishopviz/issues"
+CI = "https://github.com/nautrw/bishopviz/actions"
+
+[build-system]
+requires = ["setuptools >= 61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
