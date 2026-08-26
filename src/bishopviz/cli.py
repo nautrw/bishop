@@ -42,8 +42,6 @@ def run_algorithm(byte_pairs: list[str]) -> tuple[list[list[int]], tuple[int, in
 
         graph[bishop_y][bishop_x] += 1
     
-    graph[GRAPH_HEIGHT // 2][GRAPH_WIDTH // 2] = 15 # start is always marked 15
-    graph[bishop_y][bishop_x] = 16 # same with end but 16
     end_point = (bishop_x, bishop_y)
 
     return graph, end_point
