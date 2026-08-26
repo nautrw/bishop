@@ -25,7 +25,7 @@ CHARACTERS = {
 }
 
 
-def run_algorithm(byte_pairs: list[str]) -> list[list[int]]:
+def run_algorithm(byte_pairs: list[str]) -> tuple[list[list[int]], tuple[int, int]]:
     graph = [[0 for _ in range(GRAPH_WIDTH)] for _ in range(GRAPH_HEIGHT)]
     bishop_x = GRAPH_WIDTH // 2
     bishop_y = GRAPH_HEIGHT // 2
@@ -44,9 +44,10 @@ def run_algorithm(byte_pairs: list[str]) -> list[list[int]]:
     
     graph[GRAPH_HEIGHT // 2][GRAPH_WIDTH // 2] = 15 # start is always marked 15
     graph[bishop_y][bishop_x] = 16 # same with end but 16
+    end_point = (bishop_x, bishop_y)
 
-    return graph
+    return graph, end_point
 
 bytes = bytes_to_pairs(encode_text("SHA256:s6N0OwlTDKjDez98kZRwUGZbTYaQUArv+EYC6sigFwA ben@eshwil"))
 data = run_algorithm(bytes)
-print_graph(GRAPH_WIDTH, GRAPH_HEIGHT, data, True, CHARACTERS)
+print_graph(GRAPH_WIDTH, GRAPH_HEIGHT, data[0], True, CHARACTERS)
