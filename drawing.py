@@ -1,4 +1,4 @@
-def print_graph(graph_width: int, graph_height: int, data: list[list[int]], draw_axis_numbers: bool) -> None:
+def print_graph(graph_width: int, graph_height: int, data: list[list[int]], draw_axis_numbers: bool, charset: dict[int, str]) -> None:
     padding = 0
     padding_str = ' ' * padding
 
@@ -19,7 +19,7 @@ def print_graph(graph_width: int, graph_height: int, data: list[list[int]], draw
 
     for y, row in enumerate(data):
         padding = y if draw_axis_numbers else padding_str
-        row_str = ''.join([str(i) for i in row])
+        row_str = ''.join([charset[i] for i in row])
         print(f"{padding}|{row_str}|")
 
     print(f"{padding_str}+{'-' * graph_width}+")
