@@ -14,7 +14,7 @@ from bishopviz.globals import GRAPH_HEIGHT, GRAPH_WIDTH
 from bishopviz.hash import bytes_to_pairs, file_md5, text_md5
 
 
-@click.command()
+@click.command(context_settings={"help_option_names": ['-h', '--help']})
 @click.option('-r', '--random-feed', is_flag=True, help="Use a random text string as the input.")
 @click.option('-f', '--file-feed', type=str, help="Use the contents of any file as the input.")
 @click.option('-a', '--animate', type=float, help="Display the algorithm's progress as an animation, with the specified number of seconds as the interval between frames.")
@@ -24,6 +24,7 @@ from bishopviz.hash import bytes_to_pairs, file_md5, text_md5
 @click.option('--no-start-end', is_flag=True, help="Don't show the start and end positions on the graph.")
 def cli(random_feed: bool, file_feed: str, animate: float, charset: str, colors: bool, data: bool, no_start_end: bool,) -> None:
     """Drunken Bishop algorithm implementation for random ASCII art generation from md5 hashes."""
+
     if data:
         subprocess.Popen([
             sys.executable,
