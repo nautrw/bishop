@@ -20,11 +20,14 @@ byte_pairs = bytes_to_pairs(hash.digest())
 
 algorithm = DrunkenBishopAlgorithm(GRAPH_WIDTH, GRAPH_HEIGHT, byte_pairs)
 
-generation = st.slider("Generation", min_value=1, max_value=64, step=1, value=64, help="Change the slider to view the algorithm at a specific generation.")
+generation = st.slider("Generation", min_value=0, max_value=64, step=1, value=64, help="Change the slider to view the algorithm at a specific generation.")
 
 for _ in range(generation):
     algorithm.move()
 
+charset = st.selectbox("Character Set", ("ascii", "ascii_alt", "emoji", "emoji2", "emoji3", "emoji4", "greek", "cyrillic", "katakana", "math", "blocks", "faces", "cars", "plants"))
+accomodate_large_chars = charset in ["emoji", "emoji2", "emoji3", "emoji4", "katakana", "faces", "cars", "plants"]
+st.code(algorithm.draw_graph(CHARACTER_SETS[charset], show_start=True, show_end=True, show_current_position=True, accomodate_large_chars=accomodate_large_chars, colorize=False), language="None", width="content")
 fig = px.imshow(algorithm.graph, text_auto=True, color_continuous_scale="Viridis")
 
 st.plotly_chart(fig)
