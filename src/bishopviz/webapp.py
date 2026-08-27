@@ -66,7 +66,7 @@ fig = px.area(movements_df, x="Generation", y=["Left", "Right", "Up", "Down"])
 st.plotly_chart(fig)
 
 st.divider()
-st.subheader("Directional Bias")
+st.subheader("Net Directional Movement")
 st.write("Negative horizontal values are leftward, positive are right. Negative vertical values are upward, negative are downward.")
 fig = px.line(movements_df, x="Generation", y=["Net Horizontal Movement", "Net Vertical Movement"])
 st.plotly_chart(fig)
