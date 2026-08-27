@@ -17,13 +17,12 @@ GRAPH_HEIGHT = 9
 @click.option('-c', '--charset', type=str, show_default=True, default="ascii", help="Use a different character set for the graph. Options: ascii, ascii_alt, emoji, emoji2, emoji3, emoji4, greek, cyrillic, katakana, math, blocks, faces, cars, plants")
 @click.option('--no-start-end', is_flag=True, help="Don't show the start and end positions on the graph.")
 def cli(random_feed: bool, animate: float, charset: str, no_start_end: bool) -> None:
-    global GRAPH_WIDTH, GRAPH_HEIGHT
+    accomodate_large_chars = False
 
     if charset not in CHARACTER_SETS:
         raise click.ClickException("You must select one of the character set options. To view the available options, run `bishopviz --help`.")
     elif charset in ["emoji", "emoji2", "emoji3", "emoji4", "katakana", "faces", "cars", "plants"]:
-        GRAPH_WIDTH *= 2
-        GRAPH_HEIGHT *= 2
+        accomodate_large_chars = True
 
     if random_feed:
         feed = ''.join(random.choices(string.printable, k=32))
@@ -36,7 +35,7 @@ def cli(random_feed: bool, animate: float, charset: str, no_start_end: bool) -> 
         for i in range(len(byte_pairs)):
             algorithm.move()
             print(f"Generation: {i + 1}")
-            algorithm.print_graph(CHARACTER_SETS[charset], True, True, True)
+            algorithm.print_graph(CHARACTER_SETS[charset], show_start=not no_start_end, show_end=not no_start_end, show_current_position=True, accomodate_large_chars=accomodate_large_chars)
 
             if i != len(byte_pairs) - 1:
                 # basically this moves the cursor to the top of the box,
@@ -52,4 +51,4 @@ def cli(random_feed: bool, animate: float, charset: str, no_start_end: bool) -> 
         for _ in range(len(byte_pairs)):
             algorithm.move()
 
-        algorithm.print_graph(CHARACTER_SETS[charset], not no_start_end, not no_start_end, False)
+        algorithm.print_graph(CHARACTER_SETS[charset], show_start=not no_start_end, show_end=not no_start_end, show_current_position=False, accomodate_large_chars=accomodate_large_chars)
