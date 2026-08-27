@@ -1,5 +1,6 @@
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objects as go
 import streamlit as st
 
 from bishopviz.algorithm import DrunkenBishopAlgorithm
@@ -46,4 +47,26 @@ st.plotly_chart(fig)
 st.divider()
 st.subheader("Scatter Plot")
 fig = px.scatter(graph_df, x="x", y="y", size="value", color="value", color_continuous_scale="plasma")
+st.plotly_chart(fig)
+
+st.divider()
+st.subheader("3D Surface Plot")
+fig = go.Figure(
+    data=[
+        go.Surface(
+            x=graph_df.x,
+            y=graph_df.y,
+            z=graph_df.values,
+            colorscale="Viridis",
+            contours={
+                "z": {
+                    "show": True,
+                    "usecolormap": True,
+                    "highlightcolor": "white",
+                    "project_z": True,
+                }
+            },
+        )
+    ]
+)
 st.plotly_chart(fig)
