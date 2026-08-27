@@ -9,10 +9,9 @@ import click
 
 from bishopviz.algorithm import DrunkenBishopAlgorithm
 from bishopviz.charsets import CHARACTER_SETS
+from bishopviz.globals import GRAPH_HEIGHT, GRAPH_WIDTH
 from bishopviz.hash import bytes_to_pairs, text_md5
 
-GRAPH_WIDTH = 17
-GRAPH_HEIGHT = 9
 
 @click.command()
 @click.option('-r', '--random-feed', is_flag=True, help="Use a random text string as the input.")
