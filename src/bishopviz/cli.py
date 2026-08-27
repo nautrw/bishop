@@ -5,37 +5,18 @@ import time
 import click
 
 from bishopviz.algorithm import DrunkenBishopAlgorithm
+from bishopviz.charsets import CHARACTER_SETS
 from bishopviz.hash import bytes_to_pairs, encode_text
 
 GRAPH_WIDTH = 17
 GRAPH_HEIGHT = 9
 
-CHARACTERS = {
-    0: " ",
-    1: ".",
-    2: "o",
-    3: "+",
-    4: "=",
-    5: "*",
-    6: "B",
-    7: "0",
-    8: "X",
-    9: "@",
-    10: "%",
-    11: "&",
-    12: "#",
-    13: "/",
-    14: "^",
-    15: "S",
-    16: "E",
-    "bishop": "󰡜"
-}
-
 @click.command()
 @click.option('-r', '--random-feed', is_flag=True, help="Use a random text string as the input.")
 @click.option('-a', '--animate', type=float, help="Display the algorithm's progress as an animation, with the specified number of seconds as the interval between frames.")
+@click.option('-c', '--charset', type=str, show_default=True, default="ascii", help="Use a different character set for the graph. Options: ascii, ascii_alt, emoji, emoji2, emoji3, emoji4, greek, cyrillic, katakana, math, blocks")
 @click.option('--no-start-end', is_flag=True, help="Don't show the start and end positions on the graph.")
-def cli(random_feed: bool, seconds: float, no_start_end: bool) -> None:
+def cli(random_feed: bool, seconds: float, charset: str, no_start_end: bool) -> None:
     if random_feed:
         feed = ''.join(random.choices(string.printable, k=32))
 
@@ -47,7 +28,7 @@ def cli(random_feed: bool, seconds: float, no_start_end: bool) -> None:
         for i in range(len(byte_pairs)):
             algorithm.move()
             print(f"Generation: {i + 1}")
-            algorithm.print_graph(CHARACTERS, True, True, True)
+            algorithm.print_graph(CHARACTER_SETS[charset], True, True, True)
 
             if i != len(byte_pairs) - 1:
                 # basically this moves the cursor to the top of the box,
@@ -63,4 +44,4 @@ def cli(random_feed: bool, seconds: float, no_start_end: bool) -> None:
         for _ in range(len(byte_pairs)):
             algorithm.move()
 
-        algorithm.print_graph(CHARACTERS, not no_start_end, not no_start_end, False)
+        algorithm.print_graph(CHARACTER_SETS[charset], not no_start_end, not no_start_end, False)
