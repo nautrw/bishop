@@ -14,9 +14,17 @@ GRAPH_HEIGHT = 9
 @click.command()
 @click.option('-r', '--random-feed', is_flag=True, help="Use a random text string as the input.")
 @click.option('-a', '--animate', type=float, help="Display the algorithm's progress as an animation, with the specified number of seconds as the interval between frames.")
-@click.option('-c', '--charset', type=str, show_default=True, default="ascii", help="Use a different character set for the graph. Options: ascii, ascii_alt, emoji, emoji2, emoji3, emoji4, greek, cyrillic, katakana, math, blocks")
+@click.option('-c', '--charset', type=str, show_default=True, default="ascii", help="Use a different character set for the graph. Options: ascii, ascii_alt, emoji, emoji2, emoji3, emoji4, greek, cyrillic, katakana, math, blocks, faces, flowers, plants")
 @click.option('--no-start-end', is_flag=True, help="Don't show the start and end positions on the graph.")
 def cli(random_feed: bool, animate: float, charset: str, no_start_end: bool) -> None:
+    global GRAPH_WIDTH, GRAPH_HEIGHT
+
+    if charset not in CHARACTER_SETS:
+        raise click.ClickException("You must select one of the character set options. To view the available options, run `bishopviz --help`.")
+    elif charset in ["emoji", "emoji2", "emoji3", "emoji4", "katakana", "faces", "flowers", "plants"]:
+        GRAPH_WIDTH *= 2
+        GRAPH_HEIGHT *= 2
+
     if random_feed:
         feed = ''.join(random.choices(string.printable, k=32))
 
