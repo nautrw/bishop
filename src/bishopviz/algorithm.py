@@ -19,6 +19,11 @@ class DrunkenBishopAlgorithm:
         self.bishop_x = self.graph_width // 2
         self.bishop_y = self.graph_height // 2
 
+        self.times_left = 0
+        self.times_right = 0
+        self.times_up = 0
+        self.times_down = 0
+
         self.byte_pairs = byte_pairs
         self.pair_index = 0
 
@@ -26,8 +31,22 @@ class DrunkenBishopAlgorithm:
         self.end_point = (-1, -1)  # placeholder
 
     def move(self):
-        self.bishop_x += 1 if self.byte_pairs[self.pair_index][1] == "1" else -1
-        self.bishop_y += 1 if self.byte_pairs[self.pair_index][0] == "1" else -1
+        # self.bishop_x += 1 if self.byte_pairs[self.pair_index][1] == "1" else -1
+        # self.bishop_y += 1 if self.byte_pairs[self.pair_index][0] == "1" else -1
+
+        if self.byte_pairs[self.pair_index][1] == "1":
+            self.bishop_x += 1
+            self.times_right += 1
+        else:
+            self.bishop_x -= 1
+            self.times_left += 1
+
+        if self.byte_pairs[self.pair_index][0] == "1":
+            self.bishop_y += 1
+            self.times_down += 1
+        else:
+            self.bishop_y -= 1
+            self.times_up += 1
 
         self.bishop_x = max(self.bishop_x, 0)
         self.bishop_y = max(self.bishop_y, 0)

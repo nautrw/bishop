@@ -24,8 +24,18 @@ algorithm = DrunkenBishopAlgorithm(GRAPH_WIDTH, GRAPH_HEIGHT, byte_pairs)
 
 generation = st.slider("Generation", min_value=0, max_value=64, step=1, value=64, help="Change the slider to view the algorithm at a specific generation.")
 
-for _ in range(generation):
+movements_dict = {"generation": [], "left": [], "right": [], "up": [], "down": []}
+
+for i in range(generation):
     algorithm.move()
+
+    movements_dict["generation"].append(i)
+    movements_dict["left"].append(algorithm.times_left)
+    movements_dict["right"].append(algorithm.times_right)
+    movements_dict["up"].append(algorithm.times_up)
+    movements_dict["down"].append(algorithm.times_down)
+
+movements_df = pd.DataFrame(movements_dict)
 
 graph_dict = {"x": [], "y": [], "value": []}
 for y, row in enumerate(algorithm.graph):
@@ -38,6 +48,11 @@ graph_df = pd.DataFrame(graph_dict)
 charset = st.selectbox("Character Set", ("ascii", "ascii_alt", "emoji", "emoji2", "emoji3", "emoji4", "greek", "cyrillic", "katakana", "math", "blocks", "faces", "cars", "plants"))
 accomodate_large_chars = charset in ["emoji", "emoji2", "emoji3", "emoji4", "katakana", "faces", "cars", "plants"]
 st.code(algorithm.draw_graph(CHARACTER_SETS[charset], show_start=True, show_end=True, show_current_position=True, accomodate_large_chars=accomodate_large_chars, colorize=False), language="None", width="content")
+
+st.divider()
+st.subheader("Movements Over Time")
+fig = px.area(movements_df, x="generation", y=["left", "right", "up", "down"])
+st.plotly_chart(fig)
 
 st.divider()
 st.subheader("Heatmap")
