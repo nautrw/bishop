@@ -34,7 +34,8 @@ CHARACTERS = {
 @click.command()
 @click.option('-r', '--random_feed', is_flag=True, help="Use a random text string as the input.")
 @click.option('-s', '--seconds', type=float, help="Display the algorithm's progress as a timelapse over the specified number.")
-def cli(random_feed: bool, seconds: float) -> None:
+@click.option('--no-start-end', is_flag = True, help="Don't show the start and end positions on the graph.")
+def cli(random_feed: bool, seconds: float, no_start_end: bool) -> None:
     if random_feed:
         feed = ''.join(random.choices(string.printable, k=32))
 
@@ -62,4 +63,4 @@ def cli(random_feed: bool, seconds: float) -> None:
         for _ in range(len(byte_pairs)):
             algorithm.move()
 
-        algorithm.print_graph(CHARACTERS)
+        algorithm.print_graph(CHARACTERS, not no_start_end, not no_start_end, False)
