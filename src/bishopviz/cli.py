@@ -32,7 +32,7 @@ CHARACTERS = {
 }
 
 @click.command()
-@click.option('-r', '--random_feed', is_flag=True, help="Use a random text string as the input.")
+@click.option('-r', '--random-feed', is_flag=True, help="Use a random text string as the input.")
 @click.option('-s', '--seconds', type=float, help="Display the algorithm's progress as a timelapse over the specified number.")
 @click.option('--no-start-end', is_flag = True, help="Don't show the start and end positions on the graph.")
 def cli(random_feed: bool, seconds: float, no_start_end: bool) -> None:
