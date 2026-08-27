@@ -31,7 +31,8 @@ CHARACTERS = {
 
 @click.command()
 @click.option('-r', '--random_feed', is_flag=True, help="Use a random text string as the input.")
-def cli(random_feed: bool) -> None:
+@click.option('--draw-axis', is_flag=True, help="Whether to draw the x- and y-axis numbers on the graph.")
+def cli(random_feed: bool, draw_axis: bool) -> None:
     if random_feed:
         feed = ''.join(random.choices(string.printable, k=32))
 
@@ -42,4 +43,4 @@ def cli(random_feed: bool) -> None:
     for _ in range(len(byte_pairs)):
         algorithm.move()
 
-    algorithm.print_graph(True, CHARACTERS)
+    algorithm.print_graph(draw_axis, CHARACTERS)
