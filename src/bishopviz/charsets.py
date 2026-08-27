@@ -1,3 +1,23 @@
+COLORS = {
+    0: "black",
+    1: "red",
+    2: "green",
+    3: "yellow",
+    4: "blue",
+    5: "magenta",
+    6: "cyan",
+    7: "white",
+    8: "bright_black",
+    9: "bright_red",
+    10: "bright_green",
+    11: "bright_yellow",
+    12: "bright_blue",
+    13: "bright_magenta",
+    14: "bright_cyan",
+    15: "bright_white",
+    16: "white",
+}
+
 CHARACTER_SETS = {
     "ascii": {
         0: " ",

@@ -1,3 +1,8 @@
+import click
+
+from bishopviz.charsets import COLORS
+
+
 class DrunkenBishopAlgorithm:
     def __init__(
         self,
@@ -35,7 +40,7 @@ class DrunkenBishopAlgorithm:
         if self.pair_index == len(self.byte_pairs):
             self.end_point = (self.bishop_x, self.bishop_y)
 
-    def print_graph(self, charset: dict[int | str, str], show_start: bool = True, show_end: bool = True, show_current_position: bool = False, accomodate_large_chars: bool = False) -> None:
+    def print_graph(self, charset: dict[int | str, str], show_start: bool = True, show_end: bool = True, show_current_position: bool = False, accomodate_large_chars: bool = False, colorize: bool = False) -> None:
         graph_width = self.graph_width * 2 if accomodate_large_chars else self.graph_width
 
         print(f"+{'-' * graph_width}+")
@@ -58,7 +63,10 @@ class DrunkenBishopAlgorithm:
                 elif show_current_position and position == bishop_pos:
                     row_arr.append(charset["bishop"])
                 else:
-                    row_arr.append(charset[tile])
+                    if colorize:
+                        row_arr.append(click.style(charset[tile], fg=COLORS[tile]))
+                    else:
+                        row_arr.append(charset[tile])
 
             print(f"|{''.join(row_arr)}|")
 

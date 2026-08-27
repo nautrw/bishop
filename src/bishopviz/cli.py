@@ -6,7 +6,7 @@ import click
 
 from bishopviz.algorithm import DrunkenBishopAlgorithm
 from bishopviz.charsets import CHARACTER_SETS
-from bishopviz.hash import bytes_to_pairs, text_md5, encode_hash
+from bishopviz.hash import bytes_to_pairs, text_md5
 
 GRAPH_WIDTH = 17
 GRAPH_HEIGHT = 9
@@ -15,8 +15,9 @@ GRAPH_HEIGHT = 9
 @click.option('-r', '--random-feed', is_flag=True, help="Use a random text string as the input.")
 @click.option('-a', '--animate', type=float, help="Display the algorithm's progress as an animation, with the specified number of seconds as the interval between frames.")
 @click.option('-c', '--charset', type=str, show_default=True, default="ascii", help="Use a different character set for the graph. Options: ascii, ascii_alt, emoji, emoji2, emoji3, emoji4, greek, cyrillic, katakana, math, blocks, faces, cars, plants")
+@click.option('-C', '--colors', is_flag=True, help="Whether to colorize the output.")
 @click.option('--no-start-end', is_flag=True, help="Don't show the start and end positions on the graph.")
-def cli(random_feed: bool, animate: float, charset: str, no_start_end: bool) -> None:
+def cli(random_feed: bool, animate: float, charset: str, colors: bool, no_start_end: bool,) -> None:
     accomodate_large_chars = False
 
     if charset not in CHARACTER_SETS:
@@ -37,7 +38,7 @@ def cli(random_feed: bool, animate: float, charset: str, no_start_end: bool) -> 
         for i in range(len(byte_pairs)):
             algorithm.move()
             print(f"Generation: {i + 1}")
-            algorithm.print_graph(CHARACTER_SETS[charset], show_start=not no_start_end, show_end=not no_start_end, show_current_position=True, accomodate_large_chars=accomodate_large_chars)
+            algorithm.print_graph(CHARACTER_SETS[charset], show_start=not no_start_end, show_end=not no_start_end, show_current_position=True, accomodate_large_chars=accomodate_large_chars, colorize=colors)
 
             if i != len(byte_pairs) - 1:
                 # basically this moves the cursor to the top of the box,
@@ -53,4 +54,4 @@ def cli(random_feed: bool, animate: float, charset: str, no_start_end: bool) -> 
         for _ in range(len(byte_pairs)):
             algorithm.move()
 
-        algorithm.print_graph(CHARACTER_SETS[charset], show_start=not no_start_end, show_end=not no_start_end, show_current_position=False, accomodate_large_chars=accomodate_large_chars)
+        algorithm.print_graph(CHARACTER_SETS[charset], show_start=not no_start_end, show_end=not no_start_end, show_current_position=False, accomodate_large_chars=accomodate_large_chars, colorize=colors)
