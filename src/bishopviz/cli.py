@@ -23,6 +23,7 @@ from bishopviz.hash import bytes_to_pairs, file_md5, text_md5
 @click.option('-d', '--data', is_flag=True, help="Open a Streamlit app to run the algorithm and visualize data.")
 @click.option('--no-start-end', is_flag=True, help="Don't show the start and end positions on the graph.")
 def cli(random_feed: bool, file_feed: str, animate: float, charset: str, colors: bool, data: bool, no_start_end: bool,) -> None:
+    """Drunken Bishop algorithm implementation for random ASCII art generation from md5 hashes."""
     if data:
         subprocess.Popen([
             sys.executable,
