@@ -52,7 +52,7 @@ class DrunkenBishopAlgorithm:
             nums_str = ''.join([str(i)[-1] for i in range(self.graph_width)])
             print(f"{' ' * top_num_padding}{nums_str}")
 
-        print(f"{padding_str}+{'-' * self.graph_width}+")
+        print(f"{padding_str}+{'-' * self.graph_width}+{'x' if draw_axis else ''}")
 
         for y, row in enumerate(self.graph):
             padding = y if draw_axis else padding_str
@@ -60,3 +60,6 @@ class DrunkenBishopAlgorithm:
             print(f"{padding}|{row_str}|")
 
         print(f"{padding_str}+{'-' * self.graph_width}+")
+
+        if draw_axis:
+            print(f"{padding_str}y")
