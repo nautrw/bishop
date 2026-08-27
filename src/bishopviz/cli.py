@@ -43,4 +43,4 @@ def cli(random_feed: bool) -> None:
     for _ in range(len(byte_pairs)):
         algorithm.move()
 
-    print_graph(GRAPH_WIDTH, GRAPH_HEIGHT, algorithm.graph, False, CHARACTERS)
+    algorithm.print_graph(True, CHARACTERS)
