@@ -1,5 +1,5 @@
 [project]
-name = "bishopviz_nautrw"
+name = "bishopviz"
 version = "0.0.1"
 authors = [
     { name = "nautrw", email="nautrw@proton.me" }
