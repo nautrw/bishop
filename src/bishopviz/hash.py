@@ -2,10 +2,11 @@ import hashlib
 import itertools
 
 
-def encode_text(text: str) -> bytes:
-    text_bytes = text.encode()
-    md5_hash = hashlib.md5(text_bytes)
-    return md5_hash.digest()
+def text_md5(text: str) -> hashlib._Hash:
+    return hashlib.md5(text.encode())
+
+def encode_hash(hash: hashlib._Hash) -> bytes:
+    return hash.digest()
 
 def bytes_to_pairs(bytes: bytes) -> list[str]:
     result = []

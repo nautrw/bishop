@@ -6,7 +6,7 @@ import click
 
 from bishopviz.algorithm import DrunkenBishopAlgorithm
 from bishopviz.charsets import CHARACTER_SETS
-from bishopviz.hash import bytes_to_pairs, encode_text
+from bishopviz.hash import bytes_to_pairs, text_md5, encode_hash
 
 GRAPH_WIDTH = 17
 GRAPH_HEIGHT = 9
@@ -27,8 +27,10 @@ def cli(random_feed: bool, animate: float, charset: str, no_start_end: bool) -> 
     if random_feed:
         feed = ''.join(random.choices(string.printable, k=32))
 
-    byte_pairs = bytes_to_pairs(encode_text(feed))
+    hash = text_md5(feed)
+    print(f'Hash: {hash.hexdigest()}')
 
+    byte_pairs = bytes_to_pairs(hash.digest())
     algorithm = DrunkenBishopAlgorithm(GRAPH_WIDTH, GRAPH_HEIGHT, byte_pairs)
 
     if animate:
