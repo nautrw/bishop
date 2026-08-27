@@ -1,3 +1,4 @@
+import pandas as pd
 import plotly.express as px
 import streamlit as st
 
@@ -25,6 +26,14 @@ generation = st.slider("Generation", min_value=0, max_value=64, step=1, value=64
 for _ in range(generation):
     algorithm.move()
 
+graph_dict = {"x": [], "y": [], "value": []}
+for y, row in enumerate(algorithm.graph):
+    for x, tile in enumerate(row):
+        graph_dict["x"].append(x)
+        graph_dict["y"].append(y)
+        graph_dict["value"].append(tile)
+graph_df = pd.DataFrame(graph_dict)
+
 charset = st.selectbox("Character Set", ("ascii", "ascii_alt", "emoji", "emoji2", "emoji3", "emoji4", "greek", "cyrillic", "katakana", "math", "blocks", "faces", "cars", "plants"))
 accomodate_large_chars = charset in ["emoji", "emoji2", "emoji3", "emoji4", "katakana", "faces", "cars", "plants"]
 st.code(algorithm.draw_graph(CHARACTER_SETS[charset], show_start=True, show_end=True, show_current_position=True, accomodate_large_chars=accomodate_large_chars, colorize=False), language="None", width="content")
@@ -32,4 +41,9 @@ st.code(algorithm.draw_graph(CHARACTER_SETS[charset], show_start=True, show_end=
 st.divider()
 st.subheader("Heatmap")
 fig = px.imshow(algorithm.graph, text_auto=True, color_continuous_scale="Viridis")
+st.plotly_chart(fig)
+
+st.divider()
+st.subheader("Scatter Plot")
+fig = px.scatter(graph_df, x="x", y="y", size="value", color="value", color_continuous_scale="plasma")
 st.plotly_chart(fig)
