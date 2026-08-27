@@ -35,11 +35,29 @@ class DrunkenBishopAlgorithm:
         if self.pair_index == len(self.byte_pairs):
             self.end_point = (self.bishop_x, self.bishop_y)
 
-    def print_graph(self, charset: dict[int, str]) -> None:
+    def print_graph(self, charset: dict[int | str, str], show_start: bool = True, show_end: bool = True, show_current_position: bool = False) -> None:
         print(f"+{'-' * self.graph_width}+")
 
-        for row in self.graph:
-            row_str = ''.join([charset[i] for i in row])
-            print(f"|{row_str}|")
+        # for row in self.graph:
+        #     row_str = ''.join([charset[i] for i in row])
+        #     print(f"|{row_str}|")
+
+        for y, row in enumerate(self.graph):
+            row_arr = []
+
+            for x, tile in enumerate(row):
+                position = (x, y)
+                bishop_pos = (self.bishop_x, self.bishop_y)
+
+                if show_end and position == self.end_point:
+                    row_arr.append(charset[16])
+                elif show_start and position == self.start_point:
+                    row_arr.append(charset[15])
+                elif show_current_position and position == bishop_pos:
+                    row_arr.append(charset["bishop"])
+                else:
+                    row_arr.append(charset[tile])
+
+            print(f"|{''.join(row_arr)}|")
 
         print(f"+{'-' * self.graph_width}+")

@@ -28,6 +28,7 @@ CHARACTERS = {
     14: "^",
     15: "S",
     16: "E",
+    "bishop": "󰡜"
 }
 
 @click.command()
@@ -45,7 +46,7 @@ def cli(random_feed: bool, seconds: float) -> None:
         for i in range(len(byte_pairs)):
             algorithm.move()
             print(f"Generation: {i + 1}")
-            algorithm.print_graph(CHARACTERS)
+            algorithm.print_graph(CHARACTERS, True, True, True)
 
             if i != len(byte_pairs) - 1:
                 # basically this moves the cursor to the top of the box,
