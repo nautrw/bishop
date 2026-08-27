@@ -35,31 +35,14 @@ class DrunkenBishopAlgorithm:
         if self.pair_index == len(self.byte_pairs):
             self.end_point = (self.bishop_x, self.bishop_y)
 
-    def print_graph(self, draw_axis: bool, charset: dict[int, str]) -> None:
-        padding = 0
-        padding_str = ' ' * padding
+    def print_graph(self, charset: dict[int, str], move_to_top: bool = False) -> None:
+        print(f"+{'-' * self.graph_width}+")
 
-        if draw_axis:
-            padding = 1
-            padding_str = ' ' * padding
-            top_num_padding = 2
-
-            if self.graph_width >= 10:
-                spaces_str = ' ' * (11 + padding)
-                nums_str = ''.join([str(i)[0] for i in range(10, self.graph_width)])
-                print(spaces_str + nums_str)
-
-            nums_str = ''.join([str(i)[-1] for i in range(self.graph_width)])
-            print(f"{' ' * top_num_padding}{nums_str}")
-
-        print(f"{padding_str}+{'-' * self.graph_width}+{'x' if draw_axis else ''}")
-
-        for y, row in enumerate(self.graph):
-            padding = y if draw_axis else padding_str
+        for row in self.graph:
             row_str = ''.join([charset[i] for i in row])
-            print(f"{padding}|{row_str}|")
+            print(f"|{row_str}|")
 
-        print(f"{padding_str}+{'-' * self.graph_width}+")
+        print(f"+{'-' * self.graph_width}+")
 
         if draw_axis:
             print(f"{padding_str}y")

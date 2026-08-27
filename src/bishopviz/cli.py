@@ -1,5 +1,6 @@
 import random
 import string
+import time
 
 import click
 
@@ -31,8 +32,8 @@ CHARACTERS = {
 
 @click.command()
 @click.option('-r', '--random_feed', is_flag=True, help="Use a random text string as the input.")
-@click.option('--draw-axis', is_flag=True, help="Whether to draw the x- and y-axis numbers on the graph.")
-def cli(random_feed: bool, draw_axis: bool) -> None:
+@click.option('-s', '--seconds', type=float, help="Display the algorithm's progress as a timelapse over the specified number.")
+def cli(random_feed: bool, seconds: float) -> None:
     if random_feed:
         feed = ''.join(random.choices(string.printable, k=32))
 
@@ -43,4 +44,4 @@ def cli(random_feed: bool, draw_axis: bool) -> None:
     for _ in range(len(byte_pairs)):
         algorithm.move()
 
-    algorithm.print_graph(draw_axis, CHARACTERS)
+    algorithm.print_graph(CHARACTERS)
