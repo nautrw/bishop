@@ -1,3 +1,9 @@
+import random
+import string
+
+import click
+
+from bishopviz.algorithm import DrunkenBishopAlgorithm
 from bishopviz.drawing import print_graph
 from bishopviz.hash import bytes_to_pairs, encode_text
 
@@ -24,28 +30,17 @@ CHARACTERS = {
     16: "E",
 }
 
+@click.command()
+@click.option('-r', '--random_feed', is_flag=True, help="Use a random text string as the input.")
+def cli(random_feed: bool) -> None:
+    if random_feed:
+        feed = ''.join(random.choices(string.printable, k=32))
 
-def run_algorithm(byte_pairs: list[str]) -> tuple[list[list[int]], tuple[int, int]]:
-    graph = [[0 for _ in range(GRAPH_WIDTH)] for _ in range(GRAPH_HEIGHT)]
-    bishop_x = GRAPH_WIDTH // 2
-    bishop_y = GRAPH_HEIGHT // 2
+    byte_pairs = bytes_to_pairs(encode_text(feed))
 
+    algorithm = DrunkenBishopAlgorithm(GRAPH_WIDTH, GRAPH_HEIGHT, byte_pairs)
 
-    for pair in byte_pairs:
-        bishop_x += 1 if pair[1] == "1" else -1
-        bishop_y += 1 if pair[0] == "1" else -1
+    for _ in range(len(byte_pairs)):
+        algorithm.move()
 
-        bishop_x = max(bishop_x, 0)
-        bishop_y = max(bishop_y, 0)
-        bishop_x = min(bishop_x, GRAPH_WIDTH - 1)
-        bishop_y = min(bishop_y, GRAPH_HEIGHT - 1)
-
-        graph[bishop_y][bishop_x] += 1
-    
-    end_point = (bishop_x, bishop_y)
-
-    return graph, end_point
-
-bytes = bytes_to_pairs(encode_text("SHA256:s6N0OwlTDKjDez98kZRwUGZbTYaQUArv+EYC6sigFwA ben@eshwil"))
-data = run_algorithm(bytes)
-print_graph(GRAPH_WIDTH, GRAPH_HEIGHT, data[0], True, CHARACTERS)
+    print_graph(GRAPH_WIDTH, GRAPH_HEIGHT, algorithm.graph, False, CHARACTERS)
