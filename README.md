@@ -3,6 +3,9 @@ Drunken Bishop algorithm implementation for random ASCII art generation from
 md5 hashes, and for data visualization from generated art.
 
 <img width="370" height="314" alt="demo" src="https://github.com/user-attachments/assets/a80dfa58-feb5-4721-8c28-cc0dbc5114b8" />
+<img width="693" height="375" alt="image" src="https://github.com/user-attachments/assets/01bab823-b2c9-441c-b544-3940692a08d3" />
+
+*One graph from the web app*
 
 # Installation
 (Recommended) If you have [pipx](https://pipx.pypa.io/stable/) installed:
