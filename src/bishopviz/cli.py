@@ -41,7 +41,24 @@ def cli(random_feed: bool, seconds: float) -> None:
 
     algorithm = DrunkenBishopAlgorithm(GRAPH_WIDTH, GRAPH_HEIGHT, byte_pairs)
 
-    for _ in range(len(byte_pairs)):
-        algorithm.move()
+    if seconds:
+        for i in range(len(byte_pairs)):
+            algorithm.move()
+            print(f"Generation: {i + 1}")
+            algorithm.print_graph(CHARACTERS)
 
-    algorithm.print_graph(CHARACTERS)
+            if i != len(byte_pairs) - 1:
+                # basically this moves the cursor to the top of the box,
+                # giving the illusion of an animation
+                # \r is the carriage return, so it moves it to the beginning
+                # of the line
+                # \x1b[yA is an ANSI escape code, which moves the cursor `y`
+                # lines up
+                print(f'\r\x1b[{GRAPH_HEIGHT + 4}A')
+
+            time.sleep(seconds)
+    else:
+        for _ in range(len(byte_pairs)):
+            algorithm.move()
+
+        algorithm.print_graph(CHARACTERS)

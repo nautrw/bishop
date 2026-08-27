@@ -35,7 +35,7 @@ class DrunkenBishopAlgorithm:
         if self.pair_index == len(self.byte_pairs):
             self.end_point = (self.bishop_x, self.bishop_y)
 
-    def print_graph(self, charset: dict[int, str], move_to_top: bool = False) -> None:
+    def print_graph(self, charset: dict[int, str]) -> None:
         print(f"+{'-' * self.graph_width}+")
 
         for row in self.graph:
@@ -43,6 +43,3 @@ class DrunkenBishopAlgorithm:
             print(f"|{row_str}|")
 
         print(f"+{'-' * self.graph_width}+")
-
-        if draw_axis:
-            print(f"{padding_str}y")
