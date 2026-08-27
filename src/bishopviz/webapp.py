@@ -1,18 +1,16 @@
-import random
-import string
-
 import plotly.express as px
 import streamlit as st
 
 from bishopviz.algorithm import DrunkenBishopAlgorithm
+from bishopviz.charsets import CHARACTER_SETS
 from bishopviz.globals import GRAPH_HEIGHT, GRAPH_WIDTH
 from bishopviz.hash import bytes_to_pairs, text_md5
 
-st.header("Drunken Bishop Algorithm Data Visualization")
+st.header("Drunken Bishop Algorithm Randomart")
 
 feed = st.text_area(
     "Feed",
-    # value=''.join(random.choices(string.printable, k=32)),
+    placeholder="Put some text here to visualize its randomart",
 )
 
 hash = text_md5(feed)
