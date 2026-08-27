@@ -3,6 +3,7 @@ import string
 import subprocess
 import sys
 import time
+from os import path
 from pathlib import Path
 
 import click
@@ -10,17 +11,18 @@ import click
 from bishopviz.algorithm import DrunkenBishopAlgorithm
 from bishopviz.charsets import CHARACTER_SETS
 from bishopviz.globals import GRAPH_HEIGHT, GRAPH_WIDTH
-from bishopviz.hash import bytes_to_pairs, text_md5
+from bishopviz.hash import bytes_to_pairs, file_md5, text_md5
 
 
 @click.command()
 @click.option('-r', '--random-feed', is_flag=True, help="Use a random text string as the input.")
+@click.option('-f', '--file-feed', type=str, help="Use the contents of any file as the input.")
 @click.option('-a', '--animate', type=float, help="Display the algorithm's progress as an animation, with the specified number of seconds as the interval between frames.")
 @click.option('-c', '--charset', type=str, show_default=True, default="ascii", help="Use a different character set for the graph. Options: ascii, ascii_alt, emoji, emoji2, emoji3, emoji4, greek, cyrillic, katakana, math, blocks, faces, cars, plants")
 @click.option('-C', '--colors', is_flag=True, help="Whether to colorize the output.")
-@click.option('-d', '--data', is_flag=True, help="Will open a Streamlit app in the web browser to show statistics and graphs from the algorithm.")
+@click.option('-d', '--data', is_flag=True, help="Open a Streamlit app to run the algorithm and visualize data.")
 @click.option('--no-start-end', is_flag=True, help="Don't show the start and end positions on the graph.")
-def cli(random_feed: bool, animate: float, charset: str, colors: bool, data: bool, no_start_end: bool,) -> None:
+def cli(random_feed: bool, file_feed: str, animate: float, charset: str, colors: bool, data: bool, no_start_end: bool,) -> None:
     if data:
         subprocess.Popen([
             sys.executable,
@@ -41,11 +43,16 @@ def cli(random_feed: bool, animate: float, charset: str, colors: bool, data: boo
 
         if random_feed:
             feed = ''.join(random.choices(string.printable, k=32))
+            file_hash = text_md5(feed)
+        elif file_feed:
+            if not path.isfile(file_feed):
+                raise click.ClickException("Invalid file.")
+            
+            file_hash = file_md5(file_feed)
 
-        hash = text_md5(feed)
-        print(f'Hash: {hash.hexdigest()}')
+        print(f'Hash: {file_hash.hexdigest()}')
 
-        byte_pairs = bytes_to_pairs(hash.digest())
+        byte_pairs = bytes_to_pairs(file_hash.digest())
         algorithm = DrunkenBishopAlgorithm(GRAPH_WIDTH, GRAPH_HEIGHT, byte_pairs)
 
         if animate:

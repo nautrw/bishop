@@ -5,6 +5,12 @@ import itertools
 def text_md5(text: str) -> hashlib._Hash:
     return hashlib.md5(text.encode())
 
+def file_md5(path: str) -> hashlib._Hash:
+    with open(path, 'rb') as f:
+        contents = f.read()
+        hash = hashlib.md5(contents)
+        return hash
+
 def encode_hash(hash: hashlib._Hash) -> bytes:
     return hash.digest()
 
