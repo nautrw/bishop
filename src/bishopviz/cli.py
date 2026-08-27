@@ -52,7 +52,7 @@ def cli(random_feed: bool, animate: float, charset: str, colors: bool, data: boo
             for i in range(len(byte_pairs)):
                 algorithm.move()
                 print(f"Generation: {i + 1}")
-                algorithm.print_graph(CHARACTER_SETS[charset], show_start=not no_start_end, show_end=not no_start_end, show_current_position=True, accomodate_large_chars=accomodate_large_chars, colorize=colors)
+                print(algorithm.draw_graph(CHARACTER_SETS[charset], show_start=not no_start_end, show_end=not no_start_end, show_current_position=True, accomodate_large_chars=accomodate_large_chars, colorize=colors))
 
                 if i != len(byte_pairs) - 1:
                     # basically this moves the cursor to the top of the box,
@@ -68,4 +68,4 @@ def cli(random_feed: bool, animate: float, charset: str, colors: bool, data: boo
             for _ in range(len(byte_pairs)):
                 algorithm.move()
 
-            algorithm.print_graph(CHARACTER_SETS[charset], show_start=not no_start_end, show_end=not no_start_end, show_current_position=False, accomodate_large_chars=accomodate_large_chars, colorize=colors)
+            print(algorithm.draw_graph(CHARACTER_SETS[charset], show_start=not no_start_end, show_end=not no_start_end, show_current_position=False, accomodate_large_chars=accomodate_large_chars, colorize=colors))

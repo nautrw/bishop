@@ -40,7 +40,7 @@ class DrunkenBishopAlgorithm:
         if self.pair_index == len(self.byte_pairs):
             self.end_point = (self.bishop_x, self.bishop_y)
 
-    def print_graph(
+    def draw_graph(
         self,
         charset: dict[int | str, str],
         show_start: bool = True,
@@ -48,12 +48,14 @@ class DrunkenBishopAlgorithm:
         show_current_position: bool = False,
         accomodate_large_chars: bool = False,
         colorize: bool = False,
-    ) -> None:
+    ) -> str:
+        result_arr = []
+
         graph_width = (
             self.graph_width * 2 if accomodate_large_chars else self.graph_width
         )
 
-        print(f"+{'-' * graph_width}+")
+        result_arr.append(f"+{'-' * graph_width}+")
 
         # for row in self.graph:
         #     row_str = ''.join([charset[i] for i in row])
@@ -78,6 +80,8 @@ class DrunkenBishopAlgorithm:
                     else:
                         row_arr.append(charset[tile])
 
-            print(f"|{''.join(row_arr)}|")
+            result_arr.append(f"|{''.join(row_arr)}|")
 
-        print(f"+{'-' * graph_width}+")
+        result_arr.append(f"+{'-' * graph_width}+")
+
+        return '\n'.join(result_arr)
