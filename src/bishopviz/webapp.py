@@ -28,6 +28,8 @@ for _ in range(generation):
 charset = st.selectbox("Character Set", ("ascii", "ascii_alt", "emoji", "emoji2", "emoji3", "emoji4", "greek", "cyrillic", "katakana", "math", "blocks", "faces", "cars", "plants"))
 accomodate_large_chars = charset in ["emoji", "emoji2", "emoji3", "emoji4", "katakana", "faces", "cars", "plants"]
 st.code(algorithm.draw_graph(CHARACTER_SETS[charset], show_start=True, show_end=True, show_current_position=True, accomodate_large_chars=accomodate_large_chars, colorize=False), language="None", width="content")
-fig = px.imshow(algorithm.graph, text_auto=True, color_continuous_scale="Viridis")
 
+st.divider()
+st.subheader("Heatmap")
+fig = px.imshow(algorithm.graph, text_auto=True, color_continuous_scale="Viridis")
 st.plotly_chart(fig)
