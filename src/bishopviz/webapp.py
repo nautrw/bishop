@@ -24,16 +24,22 @@ algorithm = DrunkenBishopAlgorithm(GRAPH_WIDTH, GRAPH_HEIGHT, byte_pairs)
 
 generation = st.slider("Generation", min_value=0, max_value=64, step=1, value=64, help="Change the slider to view the algorithm at a specific generation.")
 
-movements_dict = {"generation": [], "left": [], "right": [], "up": [], "down": []}
+movements_dict = {"Generation": [], "Left": [], "Right": [], "Up": [], "Down": [], "Net Horizontal Movement": [], "Net Vertical Movement": [], "x": [], "y": []}
 
 for i in range(generation):
     algorithm.move()
 
-    movements_dict["generation"].append(i)
-    movements_dict["left"].append(algorithm.times_left)
-    movements_dict["right"].append(algorithm.times_right)
-    movements_dict["up"].append(algorithm.times_up)
-    movements_dict["down"].append(algorithm.times_down)
+    movements_dict["Generation"].append(i)
+    movements_dict["Left"].append(algorithm.times_left)
+    movements_dict["Right"].append(algorithm.times_right)
+    movements_dict["Up"].append(algorithm.times_up)
+    movements_dict["Down"].append(algorithm.times_down)
+
+    movements_dict["Net Horizontal Movement"].append(algorithm.times_right - algorithm.times_left)
+    movements_dict["Net Vertical Movement"].append(algorithm.times_down - algorithm.times_up)
+
+    movements_dict["x"].append(algorithm.bishop_x)
+    movements_dict["y"].append(algorithm.bishop_y)
 
 movements_df = pd.DataFrame(movements_dict)
 
@@ -50,18 +56,31 @@ accomodate_large_chars = charset in ["emoji", "emoji2", "emoji3", "emoji4", "kat
 st.code(algorithm.draw_graph(CHARACTER_SETS[charset], show_start=True, show_end=True, show_current_position=True, accomodate_large_chars=accomodate_large_chars, colorize=False), language="None", width="content")
 
 st.divider()
+st.subheader("Position over time")
+fig = px.line(movements_df, x="Generation", y=["x", "y"])
+st.plotly_chart(fig)
+
+st.divider()
 st.subheader("Movements Over Time")
-fig = px.area(movements_df, x="generation", y=["left", "right", "up", "down"])
+fig = px.area(movements_df, x="Generation", y=["Left", "Right", "Up", "Down"])
+st.plotly_chart(fig)
+
+st.divider()
+st.subheader("Directional Bias")
+st.write("Negative horizontal values are leftward, positive are right. Negative vertical values are upward, negative are downward.")
+fig = px.line(movements_df, x="Generation", y=["Net Horizontal Movement", "Net Vertical Movement"])
 st.plotly_chart(fig)
 
 st.divider()
 st.subheader("Heatmap")
 fig = px.imshow(algorithm.graph, text_auto=True, color_continuous_scale="Viridis")
+fig.update_layout(xaxis_title="x", yaxis_title="y", coloraxis_colorbar_title="Visits")
 st.plotly_chart(fig)
 
 st.divider()
 st.subheader("Scatter Plot")
 fig = px.scatter(graph_df, x="x", y="y", size="value", color="value", color_continuous_scale="plasma")
+fig.update_layout(xaxis_title="x", yaxis_title="y", coloraxis_colorbar_title="Visits")
 st.plotly_chart(fig)
 
 st.divider()
@@ -82,6 +101,13 @@ fig = go.Figure(
                 }
             },
         )
-    ]
+    ],
+)
+fig.update_layout(
+    scene={
+        "zaxis_title": "Visits",
+        "xaxis_title": "x",
+        "yaxis_title": "y",
+    },
 )
 st.plotly_chart(fig)
