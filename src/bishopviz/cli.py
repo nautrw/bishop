@@ -15,14 +15,13 @@ from bishopviz.hash import bytes_to_pairs, file_md5, text_md5
 
 
 @click.command(context_settings={"help_option_names": ['-h', '--help']})
-@click.option('-r', '--random-feed', is_flag=True, help="Use a random text string as the input.")
 @click.option('-f', '--file-feed', type=str, help="Use the contents of any file as the input.")
 @click.option('-a', '--animate', type=float, help="Display the algorithm's progress as an animation, with the specified number of seconds as the interval between frames.")
 @click.option('-c', '--charset', type=str, show_default=True, default="ascii", help="Use a different character set for the graph. Options: ascii, ascii_alt, emoji, emoji2, emoji3, emoji4, greek, cyrillic, katakana, math, blocks, faces, cars, plants")
 @click.option('-C', '--colors', is_flag=True, help="Whether to colorize the output.")
 @click.option('-d', '--data', is_flag=True, help="Open a Streamlit app to run the algorithm and visualize data.")
 @click.option('--no-start-end', is_flag=True, help="Don't show the start and end positions on the graph.")
-def cli(random_feed: bool, file_feed: str, animate: float, charset: str, colors: bool, data: bool, no_start_end: bool,) -> None:
+def cli(file_feed: str, animate: float, charset: str, colors: bool, data: bool, no_start_end: bool,) -> None:
     """Drunken Bishop algorithm implementation for random ASCII art generation from md5 hashes."""
 
     if data:
@@ -43,10 +42,10 @@ def cli(random_feed: bool, file_feed: str, animate: float, charset: str, colors:
         elif charset in ["emoji", "emoji2", "emoji3", "emoji4", "katakana", "faces", "cars", "plants"]:
             accomodate_large_chars = True
 
-        if random_feed:
+        if not file_feed:
             feed = ''.join(random.choices(string.printable, k=32))
             file_hash = text_md5(feed)
-        elif file_feed:
+        else:
             if not path.isfile(file_feed):
                 raise click.ClickException("Invalid file.")
             
