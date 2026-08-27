@@ -4,7 +4,6 @@ import string
 import click
 
 from bishopviz.algorithm import DrunkenBishopAlgorithm
-from bishopviz.drawing import print_graph
 from bishopviz.hash import bytes_to_pairs, encode_text
 
 GRAPH_WIDTH = 17
