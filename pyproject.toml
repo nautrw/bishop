@@ -6,7 +6,7 @@ authors = [
 ]
 description = "Generate random ASCII art from plain text and media using the drunken bishop algorithm"
 dependencies = [
-    "click==8.3.3",
+    "click==8.5.0",
 ]
 requires-python = ">= 3.12"
 license = "MIT"
