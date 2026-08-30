@@ -13,11 +13,13 @@ Otherwise:
 ```sh
 pip install bishopviz
 ```
-Or, to use the web version, go to https://bishopviz.streamlit.app
 # Try it
 ## Web App
 The web app is the same algorithm, but shows some data visualizations about it.
-Go to [the website](https://bishopviz.streamlit.app), type anything into the text area, and then do `ctrl+Enter`.
+Run the following command to enter it:
+```sh
+bishopviz -d
+```
 ## CLI
 A quick demo of the colors and animation:
 ```sh
