@@ -31,7 +31,6 @@ def cli(file_feed: str, animate: float, charset: str, colors: bool, data: bool, 
             "streamlit",
             "run",
             str(Path(__file__).parent / "webapp.py"),
-            "--server.headless=true",
             "--browser.gatherUsageStats=false"
         ])
     else:
